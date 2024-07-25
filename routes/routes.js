@@ -1,5 +1,14 @@
 const express = require("express");
-const {} = require("../controllers/controllerBooks");
+const {
+  postRating,
+  getBooksWithBestRating,
+  putBook,
+  deleteBook,
+  getBook,
+  postBooks,
+  getBooks,
+  generateImageUrl,
+} = require("../controllers/controllerBooks");
 const {} = require("../controllers/controllersUser");
 
 const bookRouter = express.Router();
@@ -7,16 +16,16 @@ const userRouter = express.Router();
 
 // bookRouter
 
-bookRouter.get("/");
-bookRouter.get("/bestrating");
-bookRouter.get("/:id");
+bookRouter.get("/", getBooks);
+bookRouter.get("/bestrating", getBooksWithBestRating);
+bookRouter.get("/:id", getBook);
 
-bookRouter.post("/:id/rating");
-bookRouter.post("/");
+bookRouter.post("/:id/rating", postRating);
+bookRouter.post("/", postBooks);
 
-bookRouter.put("/:id");
+bookRouter.put("/:id", putBook);
 
-bookRouter.delete("/:id");
+bookRouter.delete("/:id", deleteBook);
 
 //userRouter
 
@@ -26,3 +35,7 @@ userRouter.post("login");
 // export Router
 
 module.exports = { bookRouter, userRouter };
+
+// generation d'url d'image
+
+generateImageUrl();
