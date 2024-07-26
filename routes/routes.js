@@ -9,7 +9,10 @@ const {
   getBooks,
   generateImageUrl,
 } = require("../controllers/controllerBooks");
-const {} = require("../controllers/controllersUser");
+const { logUser, signupUser } = require("../controllers/controllersUser");
+const { checkToken } = require("../middlewares/checkToken");
+const { storage } = require("../middlewares/storage");
+const multer = require("multer");
 
 const bookRouter = express.Router();
 const userRouter = express.Router();
@@ -20,17 +23,22 @@ bookRouter.get("/", getBooks);
 bookRouter.get("/bestrating", getBooksWithBestRating);
 bookRouter.get("/:id", getBook);
 
-bookRouter.post("/:id/rating", postRating);
-bookRouter.post("/", postBooks);
+bookRouter.post("/:id/rating", checkToken, postRating);
+bookRouter.post(
+  "/",
+  checkToken,
+  multer({ storage: storage }).single("image"),
+  postBooks
+);
 
-bookRouter.put("/:id", putBook);
+bookRouter.put("/:id", checkToken, putBook);
 
-bookRouter.delete("/:id", deleteBook);
+bookRouter.delete("/:id", checkToken, deleteBook);
 
 //userRouter
 
-userRouter.post("/signup");
-userRouter.post("login");
+userRouter.post("/signup", logUser);
+userRouter.post("login", signupUser);
 
 // export Router
 

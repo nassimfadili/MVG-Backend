@@ -1,4 +1,3 @@
-const express = require("express");
 const { Book } = require("../models/Book");
 
 async function postRating(req, res) {
