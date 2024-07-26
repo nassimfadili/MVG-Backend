@@ -37,8 +37,8 @@ bookRouter.delete("/:id", checkToken, deleteBook);
 
 //userRouter
 
-userRouter.post("/signup", logUser);
-userRouter.post("login", signupUser);
+userRouter.post("/signup", signupUser);
+userRouter.post("/login", logUser);
 
 // export Router
 

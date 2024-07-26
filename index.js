@@ -6,17 +6,17 @@ const { userRouter, bookRouter } = require("./routes/routes");
 
 const app = express();
 
-// routers
-
-app.use("/api/auth", userRouter);
-app.use("/api/books", bookRouter);
-
 // Middlewares
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("pictures"));
+app.use(express.static("uploads"));
+
+// routers
+
+app.use("/api/auth", userRouter);
+app.use("/api/books", bookRouter);
 
 const port = process.env.PORT || 4000;
 
