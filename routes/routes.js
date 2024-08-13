@@ -7,12 +7,10 @@ const {
   getBook,
   postBooks,
   getBooks,
-  generateImageUrl,
 } = require("../controllers/controllerBooks");
 const { logUser, signupUser } = require("../controllers/controllersUser");
 const { checkToken } = require("../middlewares/checkToken");
-const { storage } = require("../middlewares/storage");
-const multer = require("multer");
+const upload = require("../middlewares/storage");
 
 const bookRouter = express.Router();
 const userRouter = express.Router();
@@ -24,14 +22,9 @@ bookRouter.get("/bestrating", getBooksWithBestRating);
 bookRouter.get("/:id", getBook);
 
 bookRouter.post("/:id/rating", checkToken, postRating);
-bookRouter.post(
-  "/",
-  checkToken,
-  multer({ storage: storage }).single("image"),
-  postBooks
-);
+bookRouter.post("/", checkToken, upload, upload.resizeImage, postBooks);
 
-bookRouter.put("/:id", checkToken, putBook);
+bookRouter.put("/:id", checkToken, upload, upload.resizeImage, putBook);
 
 bookRouter.delete("/:id", checkToken, deleteBook);
 
@@ -43,7 +36,3 @@ userRouter.post("/login", logUser);
 // export Router
 
 module.exports = { bookRouter, userRouter };
-
-// generation d'url d'image
-
-generateImageUrl();
