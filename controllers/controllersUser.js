@@ -42,7 +42,7 @@ async function logUser(req, res) {
     res.status(401).send({ message: "Mauvaises Informations" });
     return;
   }
-  res.send({ userId: user._id, token: token });
+  res.send({ userId: user._id, token: makeToken(user) });
 }
 
 function makeToken(user) {
