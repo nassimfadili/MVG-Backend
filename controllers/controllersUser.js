@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 async function signupUser(req, res) {
   if (!req.body.email || !req.body.password) {
-    res.status(400).send({ message: "Il manque un mail ou un mot de passe" });
+    res.status(400).send({ e });
     return;
   }
   const { email, password } = req.body;
@@ -19,19 +19,19 @@ async function signupUser(req, res) {
     res.send({ userId: user._id });
   } catch (e) {
     console.error(e);
-    res.status(500).send({ message: "Erreur de creation de l'utilisateur" });
+    res.status(500).send({ e });
   }
 }
 
 async function logUser(req, res) {
   const requestBody = req.body;
   if (!requestBody.email || !requestBody.password) {
-    res.status(400).send({ message: "Il manque un mail ou un mot de passe" });
+    res.status(400).send({ e });
     return;
   }
   const user = await User.findOne({ email: requestBody.email });
   if (user == null) {
-    res.status(401).send({ message: "Mauvaises Informations" });
+    res.status(401).send({ e });
     return;
   }
   const isPasswordCorrect = await bcrypt.compare(
@@ -39,7 +39,7 @@ async function logUser(req, res) {
     user.password
   );
   if (!isPasswordCorrect) {
-    res.status(401).send({ message: "Mauvaises Informations" });
+    res.status(401).send({ e });
     return;
   }
   res.send({ userId: user._id, token: makeToken(user) });

@@ -132,7 +132,7 @@ function postBooks(req, res, next) {
   try {
     bookObject = JSON.parse(req.body.book);
   } catch (error) {
-    return res.status(400).json({ message: "Format de données invalide" });
+    return res.status(400).json({ error });
   }
 
   if (
